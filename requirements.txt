@@ -1,0 +1,5 @@
+numpy
+scipy
+matplotlib
+# Optional (only if you need to read metadata.yml in future):
+# pyyaml
