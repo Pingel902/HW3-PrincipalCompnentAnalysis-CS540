@@ -1,15 +1,29 @@
-# HW3 Principal Component Analysis - Demo
+# Principal Component Analysis (PCA) Image Processing
 
-This repository contains `hw3.py`, which implements PCA helper functions used for an assignment.
+This project implements Principal Component Analysis (PCA) for image processing and dimensionality reduction. It provides functionality to analyze, reconstruct, and perturb images using eigenvalue decomposition and covariance matrices.
 
-What I added
-- A runnable demo in `hw3.py` (an `if __name__ == "__main__"` block):
-  - If a `.npy` or `.npz` file is present in the project folder, it will be loaded and used.
-  - If no dataset is found, a synthetic dataset is generated for a smoke test.
-  - The demo computes covariance, top eigenvectors, reconstructs the first sample, saves `reconstruction_demo.png`, and attempts to show the plot.
-- `requirements.txt` listing the required packages.
+## Features
 
-Quick start (PowerShell)
+- Load and center image datasets
+- Compute covariance matrices
+- Calculate eigenvalues and eigenvectors
+- Project and reconstruct images using PCA
+- Perturb images with controlled noise
+- Visualize original and reconstructed images
+
+## Requirements
+
+- Python 3.x
+- NumPy
+- SciPy
+- Matplotlib
+
+You can install the required packages using:
+```bash
+pip install -r requirements.txt
+```
+
+## Quick Start (PowerShell)
 
 ```powershell
 # create and activate a venv
@@ -24,7 +38,58 @@ python -m pip install -r requirements.txt
 python hw3.py
 ```
 
-Notes
-- `load_and_center_dataset` expects a NumPy `.npy` or `.npz` file. If your data is in another format (CSV, images), please convert or tell me and I can add a loader.
-- `display_image` expects arrays that reshape to `(218, 178, 3)` (high-res color) and `(60, 50)` (small grayscale). The demo creates synthetic data matching the small image size.
-- If you want me to load a specific dataset that's on your machine, either place the `.npy`/`.npz` file in the project folder or tell me its path and I'll run the demo with it.
+## Functions
+
+### `load_and_center_dataset(filename)`
+Loads a dataset from a NumPy file and centers it by subtracting the mean.
+
+### `get_covariance(dataset)`
+Computes the covariance matrix for the centered dataset.
+
+### `get_eig(S, k)`
+Calculates the top k eigenvalues and corresponding eigenvectors of the covariance matrix.
+
+### `get_eig_prop(S, prop)`
+Finds eigenvalues and eigenvectors that explain a given proportion of variance.
+
+### `project_and_reconstruct_image(image, U)`
+Projects an image onto the eigenvectors and reconstructs it.
+
+### `display_image(im_orig_fullres, im_orig, im_reconstructed)`
+Displays the original high-resolution image, original image, and reconstructed image side by side.
+
+### `perturb_image(image, U, sigma)`
+Adds Gaussian noise to the image projection with a specified standard deviation.
+
+## Usage
+
+The script can be run directly and will:
+1. Look for `.npy` or `.npz` files in the current directory
+2. Load and process the image data
+3. Perform PCA
+4. Display and save the reconstruction results
+
+If no dataset is found, it will create a synthetic demo dataset.
+
+## Output
+
+The script generates a visualization comparing:
+- Original high-resolution image (218 x 178 x 3)
+- Original image (60 x 50)
+- Reconstructed image after PCA
+
+The visualization is saved as 'reconstruction_demo.png' in the working directory.
+
+## Implementation Details
+
+- Uses SciPy's `eigh` function for eigenvalue decomposition
+- Implements PCA using covariance matrix method
+- Supports both single-channel and RGB images
+- Handles various input data formats (.npy, .npz)
+- Includes proper error handling and data validation
+
+## Notes
+
+- `load_and_center_dataset` expects a NumPy `.npy` or `.npz` file. If your data is in another format (CSV, images), you'll need to convert it first.
+- `display_image` expects arrays that reshape to `(218, 178, 3)` (high-res color) and `(60, 50)` (small grayscale).
+- To use a specific dataset, place the `.npy`/`.npz` file in the project folder or provide its full path.
